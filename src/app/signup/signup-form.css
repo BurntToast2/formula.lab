@@ -1,0 +1,207 @@
+.signup-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+}
+
+.form {
+    --teal: #29968c;
+    --teal-deep: #2f837d;
+    --teal-light: #8abcb9;
+    --navy: #313544;
+    --navy-panel: #3b3f52;
+    --slate: #51535d;
+    --yellow: #f7d97b;
+    --fog: #d3dde0;
+    --mist: #b3b7bb;
+    --white: #fefefe;
+
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 28rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    padding: 2rem 1.75rem 1.75rem;
+    background: var(--navy-panel);
+    border: 1px solid rgba(138, 188, 185, 0.25);
+    border-radius: 0.85rem;
+    clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
+    box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.6);
+}
+
+.accent-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal) 0%, var(--teal-light) 45%, var(--yellow) 100%);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.brand-mark {
+    border-radius: 6px;
+}
+
+.eyebrow {
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: -0.01em;
+}
+
+.field-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.field {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.label {
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mist);
+}
+
+.input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(211, 221, 224, 0.18);
+    border-radius: 0.4rem;
+    color: var(--white);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input::placeholder {
+    color: var(--slate);
+}
+
+.input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(41, 150, 140, 0.25);
+}
+
+.button {
+    margin-top: 0.4rem;
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: 0.4rem;
+    background: var(--teal);
+    color: var(--navy);
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.button:hover {
+    background: var(--teal-light);
+}
+
+.button:active {
+    transform: translateY(1px);
+}
+
+.button:focus-visible,
+.input:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 2px;
+}
+
+@media (max-width: 26rem) {
+    .field-row {
+        flex-direction: column;
+        gap: 1.1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .button {
+        transition: none;
+    }
+}
+
+.select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%238abcb9' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    padding-right: 2.25rem;
+    cursor: pointer;
+}
+
+.select option {
+    background: var(--navy-panel);
+    color: var(--white);
+}
+
+.select:invalid,
+.select option[value=""] {
+    color: var(--slate);
+}
+
+.field-error {
+    margin: 0;
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.72rem;
+    color: #f2726f;
+    letter-spacing: 0.01em;
+}
+
+.input[aria-invalid="true"] {
+    border-color: #f2726f;
+}
+
+.input[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 3px rgba(242, 114, 111, 0.25);
+}
+
+.input-readonly {
+    color: var(--mist);
+    cursor: default;
+}
+
+.input-readonly:focus {
+    border-color: rgba(211, 221, 224, 0.18);
+    box-shadow: none;
+}
+
+.form-error {
+    margin-bottom: 0.25rem;
+}

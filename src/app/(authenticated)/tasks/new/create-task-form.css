@@ -1,0 +1,52 @@
+:root {
+  --color-teal: #29968c;
+  --color-teal-dark: #2f837d;
+  --color-teal-muted: #5b7a7b;
+  --color-gray: #b3b7bb;
+  --color-gray-light: #d3dde0;
+  --color-white: #fefefe;
+  --color-slate: #51535d;
+  --color-navy: #313544;
+  --color-yellow: #f7d97b;
+  --color-error: #c4593a;
+  --color-chip-bg: #e4f0ef;
+}
+
+.task-field {
+  border: 1.5px solid #c3d0d2;
+  background: #ffffff;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.task-field:focus {
+  outline: none;
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(41, 150, 140, 0.15);
+}
+
+.task-checkbox {
+  accent-color: var(--color-teal);
+}
+
+.task-submit-btn {
+  background-color: var(--color-teal);
+  box-shadow: 0 8px 18px rgba(35, 141, 134, 0.2);
+}
+
+.task-submit-btn:hover:not(:disabled) {
+  background-color: var(--color-teal-dark);
+}
+
+.task-submit-btn:disabled {
+  background-color: var(--color-teal-muted);
+  cursor: default;
+}
+
+.task-assignee-row:hover {
+  background-color: var(--color-chip-bg);
+}
+
+.task-submit-btn:focus-visible {
+  outline: 2px solid var(--color-yellow);
+  outline-offset: 3px;
+}

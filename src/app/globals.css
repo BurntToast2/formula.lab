@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+:root {
+  --background: #171c24;
+  --foreground: #eef4f3;
+  --color-teal: #38b6aa;
+  --color-teal-dark: #238d86;
+  --color-teal-muted: #426e70;
+  --color-teal-soft: #8bd1c8;
+  --color-gray: #77838b;
+  --color-gray-light: #d2dadd;
+  --color-white: #f7faf9;
+  --color-slate: #aab8bb;
+  --color-navy: #202936;
+  --color-yellow: #f6d56f;
+  --color-error: #e37b67;
+  --color-chip-bg: #dcefeb;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  min-width: 320px;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+  background-image: linear-gradient(135deg, rgba(56, 182, 170, 0.08), transparent 34%), linear-gradient(315deg, rgba(246, 213, 111, 0.05), transparent 30%);
+}
+
+main {
+  position: relative;
+}
+
+main.min-h-screen,
+main:not([class]) {
+  background-color: #202936;
+  background-image: linear-gradient(135deg, rgba(56, 182, 170, 0.08), transparent 40%), linear-gradient(315deg, rgba(246, 213, 111, 0.05), transparent 34%);
+}
+
+main:not([class]) {
+  min-height: 100vh;
+  padding: 4rem clamp(1.5rem, 8vw, 8rem);
+}
+
+main:not([class]) h1 {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--color-white);
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+body > div > main > div[class~="max-w-[400px]"],
+body > div > main > div[class~="max-w-[480px]"],
+body > div > main > form[class~="bg-[var(--color-white)]"] {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(139, 209, 200, 0.22);
+  border-radius: 0.5rem;
+  box-shadow: 0 24px 60px rgba(5, 10, 16, 0.35);
+}
+
+body > div > main > div[class~="max-w-[400px]"]::before,
+body > div > main > div[class~="max-w-[480px]"]::before,
+body > div > main > form[class~="bg-[var(--color-white)]"]::before {
+  display: block;
+  height: 4px;
+  margin: -2.5rem -2.5rem 2rem;
+  background: linear-gradient(90deg, var(--color-teal), var(--color-teal-soft) 55%, var(--color-yellow));
+  content: "";
+}
+
+[class~="bg-[var(--color-white)]"] {
+  background-color: #f7faf9;
+}
+
+[class~="bg-[var(--color-gray-light)]"] {
+  background-color: #202936;
+}
+
+[class~="text-[var(--color-navy)]"] {
+  color: var(--color-navy);
+}
+
+[class~="text-[var(--color-slate)]"] {
+  color: #5d6c73;
+}
+
+[class~="border-[var(--color-gray-light)]"] {
+  border-color: #c3d0d2;
+}
+
+.task-primary-btn {
+  border: 0;
+  background: var(--color-teal);
+  cursor: pointer;
+  transition: background 140ms ease, transform 140ms ease;
+}
+
+.task-primary-btn:hover {
+  background: var(--color-teal-dark);
+  transform: translateY(-1px);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-yellow);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  body > div > main > div[class~="max-w-[400px]"],
+  body > div > main > div[class~="max-w-[480px]"],
+  body > div > main > form[class~="bg-[var(--color-white)]"] {
+    padding: 1.5rem;
+  }
+
+  body > div > main > div[class~="max-w-[400px]"]::before,
+  body > div > main > div[class~="max-w-[480px]"]::before,
+  body > div > main > form[class~="bg-[var(--color-white)]"]::before {
+    margin: -1.5rem -1.5rem 1.5rem;
+  }
+}

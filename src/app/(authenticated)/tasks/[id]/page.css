@@ -1,0 +1,35 @@
+:root {
+  --edit-ink: #313544;
+  --edit-teal: #29968C;
+  --edit-teal-dark: #2F837D;
+  --edit-teal-soft: #8ABCB9;
+  --edit-slate: #51535D;
+  --edit-border: #D3DDE0;
+  --edit-border-mid: #B3B7BB;
+  --edit-white: #FEFEFE;
+  --edit-gold: #F7D97B;
+}
+
+.task-page {
+  min-height: 100vh;
+  background: var(--edit-ink);
+  padding: 24px;
+}
+
+@media (min-width: 768px) {
+  .task-page {
+    padding: 48px;
+  }
+}
+
+.task-page__container {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.task-page__not-found {
+  max-width: 560px;
+  margin: 0 auto;
+  color: var(--edit-border-mid);
+  font-size: 14px;
+}

@@ -1,0 +1,127 @@
+:root {
+  --edit-ink: #313544;
+  --edit-teal: #29968C;
+  --edit-teal-dark: #2F837D;
+  --edit-teal-soft: #8ABCB9;
+  --edit-slate: #51535D;
+  --edit-border: #D3DDE0;
+  --edit-border-mid: #B3B7BB;
+  --edit-white: #FEFEFE;
+  --edit-gold: #F7D97B;
+}
+
+.dashboard-page {
+  min-height: 100vh;
+  background: var(--edit-ink);
+  padding: 24px;
+}
+
+@media (min-width: 768px) {
+  .dashboard-page {
+    padding: 48px;
+  }
+}
+
+.dashboard-page__container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.dashboard-page__title {
+  margin: 0 0 20px 0;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--edit-white);
+  letter-spacing: -0.01em;
+}
+
+.dashboard-page__lead {
+  margin: 0;
+  font-size: 14px;
+  color: var(--edit-border-mid);
+}
+
+.dashboard-page__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 2px;
+}
+
+.dashboard-page__tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: none;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--edit-border-mid);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.dashboard-page__tab:hover {
+  color: var(--edit-white);
+}
+
+.dashboard-page__tab--active {
+  color: var(--edit-teal-soft);
+  border-bottom-color: var(--edit-gold);
+}
+
+.dashboard-page__tab-count {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--edit-border-mid);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 1px 7px;
+}
+
+.dashboard-page__tab--active .dashboard-page__tab-count {
+  color: var(--edit-ink);
+  background: var(--edit-teal-soft);
+}
+
+.dashboard-page__section {
+  margin-top: 36px;
+}
+
+.dashboard-page__section-title {
+  margin: 0 0 14px 0;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--edit-gold);
+}
+
+.dashboard-page__empty {
+  margin: 0;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--edit-border-mid);
+}
+
+.dashboard-page__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .dashboard-page__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-page__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -1,0 +1,140 @@
+:root {
+  --edit-ink: #313544;
+  --edit-teal: #29968C;
+  --edit-teal-dark: #2F837D;
+  --edit-teal-soft: #8ABCB9;
+  --edit-slate: #51535D;
+  --edit-border: #D3DDE0;
+  --edit-border-mid: #B3B7BB;
+  --edit-white: #FEFEFE;
+  --edit-gold: #F7D97B;
+}
+
+.members-page {
+  min-height: 100vh;
+  background: var(--edit-ink);
+  padding: 24px;
+}
+
+@media (min-width: 768px) {
+  .members-page {
+    padding: 48px;
+  }
+}
+
+.members-page__container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.members-page__title {
+  margin: 0 0 28px 0;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--edit-white);
+  letter-spacing: -0.01em;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 12px;
+}
+
+.members-page__title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 48px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--edit-gold);
+}
+
+.members-page__card {
+  background: var(--edit-slate);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 3px solid var(--edit-gold);
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  overflow-x: auto;
+}
+
+.members-page__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.members-page__table thead th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--edit-border-mid);
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.members-page__table tbody td {
+  padding: 14px 16px;
+  color: var(--edit-white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.members-page__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.members-page__table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.members-page__table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.members-page__row--you {
+  box-shadow: inset 3px 0 0 var(--edit-teal-soft);
+}
+
+.members-page__email {
+  color: var(--edit-border);
+}
+
+.members-page__you-badge {
+  margin-left: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--edit-teal-soft);
+  background: rgba(138, 188, 185, 0.16);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.members-page__badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.members-page__badge--team {
+  background: rgba(138, 188, 185, 0.14);
+  color: var(--edit-teal-soft);
+}
+
+.members-page__badge--leader {
+  background: rgba(247, 217, 123, 0.2);
+  color: var(--edit-gold);
+}
+
+.members-page__badge--member {
+  background: rgba(211, 221, 224, 0.14);
+  color: var(--edit-border);
+}
