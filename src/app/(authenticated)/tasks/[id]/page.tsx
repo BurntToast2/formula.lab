@@ -70,6 +70,8 @@ export default async function TaskPage({
 
     const canEdit = user.role === "team_leader" || task.createdById === user.id;
 
+    const canComplete = assignees.some((assignee) => assignee.id == user.id);
+
     return (
         <main className="task-page">
             <div className="task-page__container">
@@ -79,6 +81,7 @@ export default async function TaskPage({
                     assignees={assignees}
                     users={allUsers}
                     canEdit={canEdit}
+                    canComplete={canComplete}
                 />
             </div>
         </main>

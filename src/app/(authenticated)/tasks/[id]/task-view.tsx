@@ -38,12 +38,14 @@ export default function TaskView({
     assignees,
     users: allUsers,
     canEdit,
+    canComplete,
 }: {
     task: Task;
     teams: Team[];
     assignees: Assignee[];
     users: User[];
     canEdit: boolean;
+    canComplete;
 }) {
     const [editing, setEditing] = useState(false);
     const [completing, setCompleting] = useState(false);
@@ -155,7 +157,7 @@ export default function TaskView({
                     </button>
                 )}
 
-                {canEdit && task.status !== "completed" && task.status !== "cancelled" ? (
+                {canEdit || canComplete && task.status !== "completed" && task.status !== "cancelled" ? (
                     <button
                         type="button"
                         onClick={handleMarkAsDone}
