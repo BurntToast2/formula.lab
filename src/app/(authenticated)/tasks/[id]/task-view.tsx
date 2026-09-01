@@ -45,7 +45,7 @@ export default function TaskView({
     assignees: Assignee[];
     users: User[];
     canEdit: boolean;
-    canComplete;
+    canComplete: boolean;
 }) {
     const [editing, setEditing] = useState(false);
     const [completing, setCompleting] = useState(false);
