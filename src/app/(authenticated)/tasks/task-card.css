@@ -3,98 +3,72 @@
   --edit-teal: #29968C;
   --edit-teal-dark: #2F837D;
   --edit-teal-soft: #8ABCB9;
-  --edit-slate: #51535D;
+  --edit-slate: #454A5D;
   --edit-border: #D3DDE0;
   --edit-border-mid: #B3B7BB;
   --edit-white: #FEFEFE;
   --edit-gold: #F7D97B;
-  --edit-danger: #E5A19A;
-  --edit-success: #8FC9A0;
+  --edit-danger: #D2694E;
+  --edit-success: #8ABCB9;
+  --font-cond: 'Rajdhani', sans-serif;
 }
-
 .task-card {
   display: block;
-  border-radius: 12px;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.045);
+  border-top: 2px solid var(--edit-border-mid);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 14px 100%, 0 calc(100% - 14px));
   text-decoration: none;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  transition: background-color 0.2s ease, transform 0.15s ease;
 }
-
 .task-card:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
   transform: translateY(-2px);
 }
-
 .task-card:active {
   transform: translateY(0);
 }
 
-.task-card--overdue {
-  border-color: rgba(229, 161, 154, 0.35);
-  box-shadow: inset 3px 0 0 var(--edit-danger);
-}
+/* Priority sets the top edge color */
+.task-card:has(.task-card__badge--priority-low) { border-top-color: var(--edit-teal-soft); }
+.task-card:has(.task-card__badge--priority-medium) { border-top-color: var(--edit-gold); }
+.task-card:has(.task-card__badge--priority-high) { border-top-color: var(--edit-danger); }
 
+.task-card--overdue {
+  background: rgba(210, 105, 78, 0.07);
+}
 .task-card--overdue:hover {
-  border-color: rgba(229, 161, 154, 0.5);
+  background: rgba(210, 105, 78, 0.12);
 }
 
 .task-card__badges {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 12px;
 }
-
 .task-card__badge {
-  font-size: 10.5px;
+  font-family: var(--font-cond);
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  border-radius: 999px;
-  padding: 2px 9px;
 }
+.task-card__badge--status-todo { color: var(--edit-border-mid); }
+.task-card__badge--status-in_progress { color: var(--edit-teal-soft); }
+.task-card__badge--status-completed { color: var(--edit-success); }
+.task-card__badge--status-cancelled { color: var(--edit-danger); }
 
-.task-card__badge--status-todo {
-  background: rgba(211, 221, 224, 0.16);
-  color: var(--edit-border);
-}
-
-.task-card__badge--status-in_progress {
-  background: rgba(138, 188, 185, 0.18);
-  color: var(--edit-teal-soft);
-}
-
-.task-card__badge--status-completed {
-  background: rgba(143, 201, 160, 0.18);
-  color: var(--edit-success);
-}
-
-.task-card__badge--status-cancelled {
-  background: rgba(229, 161, 154, 0.18);
-  color: var(--edit-danger);
-}
-
-.task-card__badge--priority-low {
-  background: rgba(211, 221, 224, 0.16);
-  color: var(--edit-border);
-}
-
-.task-card__badge--priority-medium {
-  background: rgba(247, 217, 123, 0.2);
-  color: var(--edit-gold);
-}
-
-.task-card__badge--priority-high {
-  background: rgba(229, 161, 154, 0.2);
-  color: var(--edit-danger);
-}
+.task-card__badge--priority-low { color: var(--edit-teal-soft); }
+.task-card__badge--priority-medium { color: var(--edit-gold); }
+.task-card__badge--priority-high { color: var(--edit-danger); }
 
 .task-card__badge--overdue {
+  font-family: var(--font-cond);
   background: var(--edit-danger);
   color: var(--edit-ink);
+  padding: 2px 8px;
+  letter-spacing: 0.03em;
 }
 
 .task-card__title {
@@ -104,7 +78,6 @@
   line-height: 1.35;
   color: var(--edit-white);
 }
-
 .task-card__description {
   margin: 6px 0 0;
   font-size: 13px;
@@ -114,15 +87,14 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 .task-card__due {
-  margin: 10px 0 0;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--edit-teal-soft);
+  margin: 12px 0 0;
+  font-family: var(--font-cond);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--edit-white);
 }
-
 .task-card__due--overdue {
   color: var(--edit-danger);
-  font-weight: 700;
 }
