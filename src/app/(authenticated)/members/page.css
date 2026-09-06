@@ -54,8 +54,13 @@
   clip-path: polygon(0 0, 100% 0, 100% 100%, 18px 100%, 0 calc(100% - 18px));
   padding: 8px;
 }
+.members-page__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .members-page__table {
   width: 100%;
+  min-width: 480px;
   border-collapse: collapse;
   font-size: 14px;
 }
@@ -69,11 +74,13 @@
   color: var(--edit-border-mid);
   padding: 14px 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
 }
 .members-page__table tbody td {
   padding: 14px 16px;
   color: var(--edit-white);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
 }
 .members-page__table tbody tr:last-child td {
   border-bottom: none;
