@@ -170,7 +170,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  color: var(--edit-border);
+  color: var(--edit-ink);
   background: var(--edit-gold);
   text-decoration: none;
   cursor: pointer;
