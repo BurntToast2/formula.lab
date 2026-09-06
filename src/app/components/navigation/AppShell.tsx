@@ -1,15 +1,13 @@
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
 import Sidebar from "./SideBar";
 import "./AppShell.css";
-
 export default function AppShell({ children }: { children: React.ReactNode }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-
     return (
         <div className="app-shell">
+            <div className="app-shell__pinstripe" aria-hidden="true" />
             <header className="app-shell__header">
                 <button
                     type="button"
@@ -22,13 +20,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     <span className={`app-shell__toggle-bar ${sidebarOpen ? "app-shell__toggle-bar--mid-open" : ""}`} />
                     <span className={`app-shell__toggle-bar ${sidebarOpen ? "app-shell__toggle-bar--bottom-open" : ""}`} />
                 </button>
-
                 <div className="app-shell__brand">
                     <span className="app-shell__brand-mark" />
                     <span className="app-shell__brand-name">Formula Lab</span>
                 </div>
             </header>
-
             {sidebarOpen && (
                 <div
                     className="app-shell__backdrop"
@@ -36,11 +32,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     aria-hidden="true"
                 />
             )}
-
             <Sidebar open={sidebarOpen} onNavigate={() => setSidebarOpen(false)} />
-
             <main className="app-shell__main">{children}</main>
-
             <Link
                 href="/tasks/new"
                 className="app-shell__fab"
