@@ -15,10 +15,10 @@ type User = {
   teamId: string;
 };
 
-const PRIORITY_STYLES: Record<string, string> = {
-  low: "bg-[var(--color-gray-light)] text-[var(--color-slate)]",
-  medium: "bg-[var(--color-yellow)] text-[#5b4a16]",
-  high: "bg-[#f6d4c9] text-[var(--color-error)]",
+const PRIORITY_TEXT_STYLES: Record<string, string> = {
+  low: "text-[var(--color-teal-soft)]",
+  medium: "text-[var(--color-yellow)]",
+  high: "text-[var(--color-error)]",
 };
 
 export default function CreateTaskForm({
@@ -93,13 +93,13 @@ export default function CreateTaskForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-[520px] bg-[var(--color-white)] rounded-2xl p-8 shadow-[0_2px_24px_rgba(49,53,68,0.08)] flex flex-col gap-5"
+      className="task-panel w-full max-w-[520px] bg-[var(--color-slate)] p-8 flex flex-col gap-5"
     >
       <div>
-        <h2 className="m-0 text-xl font-semibold text-[var(--color-navy)] tracking-tight">
+        <h2 className="m-0 font-[family-name:var(--font-cond)] text-2xl font-bold uppercase tracking-wide text-[var(--color-white)]">
           New task
         </h2>
-        <p className="m-0 mt-1 text-[13px] text-[var(--color-slate)]">
+        <p className="m-0 mt-1 text-[13px] text-[var(--color-gray)]">
           Fill in the details and assign it to your team.
         </p>
       </div>
@@ -107,7 +107,7 @@ export default function CreateTaskForm({
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="title"
-          className="text-[13px] font-semibold text-[var(--color-slate)]"
+          className="font-[family-name:var(--font-cond)] text-[13px] font-bold uppercase tracking-wide text-[var(--color-gray)]"
         >
           Task title
         </label>
@@ -116,7 +116,7 @@ export default function CreateTaskForm({
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
-          className="task-field w-full rounded-[10px] px-3.5 py-2.5 text-sm text-[var(--color-navy)] bg-[var(--color-white)]"
+          className="task-field w-full px-3.5 py-2.5 text-sm"
           placeholder="e.g. Finalize suspension geometry"
         />
       </div>
@@ -124,7 +124,7 @@ export default function CreateTaskForm({
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="description"
-          className="text-[13px] font-semibold text-[var(--color-slate)]"
+          className="font-[family-name:var(--font-cond)] text-[13px] font-bold uppercase tracking-wide text-[var(--color-gray)]"
         >
           Description
         </label>
@@ -133,7 +133,7 @@ export default function CreateTaskForm({
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={3}
-          className="task-field w-full rounded-[10px] px-3.5 py-2.5 text-sm text-[var(--color-navy)] bg-[var(--color-white)] resize-none"
+          className="task-field w-full px-3.5 py-2.5 text-sm resize-none"
           placeholder="Any extra context for the team"
         />
       </div>
@@ -142,7 +142,7 @@ export default function CreateTaskForm({
         <div className="flex flex-col gap-1.5">
           <label
             htmlFor="team"
-            className="text-[13px] font-semibold text-[var(--color-slate)]"
+            className="font-[family-name:var(--font-cond)] text-[13px] font-bold uppercase tracking-wide text-[var(--color-gray)]"
           >
             Team
           </label>
@@ -151,7 +151,7 @@ export default function CreateTaskForm({
             value={teamId}
             onChange={(e) => setTeamId(e.target.value)}
             required
-            className="task-field w-full rounded-[10px] px-3.5 py-2.5 text-sm text-[var(--color-navy)] bg-[var(--color-white)]"
+            className="task-field w-full px-3.5 py-2.5 text-sm"
           >
             <option value="">Select a team</option>
             {teams.map((team) => (
@@ -165,7 +165,7 @@ export default function CreateTaskForm({
         <div className="flex flex-col gap-1.5">
           <label
             htmlFor="priority"
-            className="text-[13px] font-semibold text-[var(--color-slate)]"
+            className="font-[family-name:var(--font-cond)] text-[13px] font-bold uppercase tracking-wide text-[var(--color-gray)]"
           >
             Priority
           </label>
@@ -175,7 +175,7 @@ export default function CreateTaskForm({
             onChange={(e) =>
               setPriority(e.target.value as "low" | "medium" | "high")
             }
-            className="task-field w-full rounded-[10px] px-3.5 py-2.5 text-sm text-[var(--color-navy)] bg-[var(--color-white)]"
+            className="task-field w-full px-3.5 py-2.5 text-sm"
           >
             <option value="low">Low</option>
             <option value="medium">Medium</option>
@@ -186,7 +186,7 @@ export default function CreateTaskForm({
 
       <div className="flex items-center gap-3">
         <span
-          className={`inline-block text-[11px] font-bold uppercase tracking-wide rounded-full px-2.5 py-1 ${PRIORITY_STYLES[priority]}`}
+          className={`font-[family-name:var(--font-cond)] text-[12px] font-bold uppercase tracking-wide ${PRIORITY_TEXT_STYLES[priority]}`}
         >
           {priority} priority
         </span>
@@ -195,7 +195,7 @@ export default function CreateTaskForm({
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="dueDate"
-          className="text-[13px] font-semibold text-[var(--color-slate)]"
+          className="font-[family-name:var(--font-cond)] text-[13px] font-bold uppercase tracking-wide text-[var(--color-gray)]"
         >
           Deadline (optional)
         </label>
@@ -204,17 +204,17 @@ export default function CreateTaskForm({
           type="datetime-local"
           value={dueDate}
           onChange={(e) => setDueDate(e.target.value)}
-          className="task-field w-full rounded-[10px] px-3.5 py-2.5 text-sm text-[var(--color-navy)] bg-[var(--color-white)]"
+          className="task-field w-full px-3.5 py-2.5 text-sm"
         />
       </div>
 
       <fieldset className="border-0 p-0 m-0">
         <div className="flex items-center justify-between mb-2">
-          <legend className="text-[13px] font-semibold text-[var(--color-slate)] p-0">
+          <legend className="font-[family-name:var(--font-cond)] text-[13px] font-bold uppercase tracking-wide text-[var(--color-gray)] p-0">
             Assign to (optional)
           </legend>
           {selectedUsers.length > 0 && (
-            <span className="text-[12px] font-medium text-[var(--color-teal-dark)]">
+            <span className="text-[12px] font-medium text-[var(--color-teal-soft)]">
               {selectedUsers.length} selected
             </span>
           )}
@@ -225,7 +225,7 @@ export default function CreateTaskForm({
             {selectedUsers.map((user) => (
               <span
                 key={user.id}
-                className="flex items-center gap-1.5 bg-[var(--color-chip-bg)] text-[var(--color-teal-dark)] text-[12.5px] font-medium rounded-md pl-2.5 pr-1.5 py-1"
+                className="flex items-center gap-1.5 bg-[var(--color-chip-bg)] text-[var(--color-teal-soft)] text-[12.5px] font-medium pl-2.5 pr-1.5 py-1"
               >
                 {user.name}
                 <button
@@ -246,21 +246,21 @@ export default function CreateTaskForm({
           value={assigneeSearch}
           onChange={(e) => setAssigneeSearch(e.target.value)}
           placeholder="Search people…"
-          className="task-field w-full rounded-[10px] px-3.5 py-2 text-sm text-[var(--color-navy)] bg-[var(--color-white)] mb-2"
+          className="task-field w-full px-3.5 py-2 text-sm mb-2"
         />
 
-        <div className="border-[1.5px] border-[var(--color-gray)] rounded-[10px] max-h-[180px] overflow-y-auto">
+        <div className="border-[1.5px] border-[var(--color-gray)]/25 max-h-[180px] overflow-y-auto">
           {filteredUsers.length === 0 && (
-            <p className="m-0 px-3.5 py-3 text-[13px] text-[var(--color-slate)]">
-              No one matches “{assigneeSearch}”.
+            <p className="m-0 px-3.5 py-3 text-[13px] text-[var(--color-gray)]">
+              No one matches "{assigneeSearch}".
             </p>
           )}
           {filteredUsers.map((user, i) => (
             <label
               key={user.id}
-              className={`task-assignee-row flex items-center gap-2.5 px-3.5 py-2.5 text-sm text-[var(--color-navy)] cursor-pointer ${
+              className={`task-assignee-row flex items-center gap-2.5 px-3.5 py-2.5 text-sm text-[var(--color-white)] cursor-pointer ${
                 i !== filteredUsers.length - 1
-                  ? "border-b border-[var(--color-gray-light)]"
+                  ? "border-b border-[var(--color-gray-light)]/15"
                   : ""
               }`}
             >
@@ -283,7 +283,7 @@ export default function CreateTaskForm({
       <button
         type="submit"
         disabled={submitting}
-        className="task-submit-btn w-full py-3 text-[14.5px] font-semibold text-[var(--color-white)] border-0 rounded-[10px] cursor-pointer transition-colors"
+        className="task-submit-btn w-full py-3 font-[family-name:var(--font-cond)] text-[14.5px] font-bold uppercase tracking-wide border-0 cursor-pointer transition-colors"
       >
         {submitting ? "Creating…" : "Create task"}
       </button>

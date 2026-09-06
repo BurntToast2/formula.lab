@@ -1,51 +1,59 @@
 :root {
   --color-teal: #29968c;
   --color-teal-dark: #2f837d;
+  --color-teal-soft: #8abcb9;
   --color-teal-muted: #5b7a7b;
   --color-gray: #b3b7bb;
   --color-gray-light: #d3dde0;
   --color-white: #fefefe;
-  --color-slate: #51535d;
+  --color-slate: #3d4152;
   --color-navy: #313544;
   --color-yellow: #f7d97b;
-  --color-error: #c4593a;
-  --color-chip-bg: #e4f0ef;
+  --color-error: #d2694e;
+  --color-chip-bg: rgba(255, 255, 255, 0.06);
+  --font-cond: "Rajdhani", sans-serif;
 }
-
+.task-panel {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
 .task-field {
-  border: 1.5px solid #c3d0d2;
-  background: #ffffff;
-  transition: border-color 120ms ease, box-shadow 120ms ease;
+  border: none;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-white);
+  transition: border-color 120ms ease, background-color 120ms ease;
 }
-
+.task-field::placeholder {
+  color: var(--color-gray);
+}
 .task-field:focus {
   outline: none;
-  border-color: var(--color-teal);
-  box-shadow: 0 0 0 3px rgba(41, 150, 140, 0.15);
+  border-color: var(--color-teal-soft);
+  background: rgba(255, 255, 255, 0.07);
 }
-
+.task-field option {
+  background: var(--color-navy);
+  color: var(--color-white);
+}
 .task-checkbox {
   accent-color: var(--color-teal);
 }
-
 .task-submit-btn {
   background-color: var(--color-teal);
-  box-shadow: 0 8px 18px rgba(35, 141, 134, 0.2);
+  color: var(--color-navy);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 12px));
 }
-
 .task-submit-btn:hover:not(:disabled) {
-  background-color: var(--color-teal-dark);
+  background-color: var(--color-teal-soft);
 }
-
 .task-submit-btn:disabled {
   background-color: var(--color-teal-muted);
+  color: var(--color-white);
   cursor: default;
 }
-
 .task-assignee-row:hover {
   background-color: var(--color-chip-bg);
 }
-
 .task-submit-btn:focus-visible {
   outline: 2px solid var(--color-yellow);
   outline-offset: 3px;
