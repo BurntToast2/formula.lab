@@ -87,11 +87,9 @@ export default function TaskView({
                 <span className="task-view__badge task-view__badge--neutral">
                     {task.status.replace("_", " ")}
                 </span>
-
-                <span className="task-view__badge task-view__badge--priority">
+                <span className={`task-view__badge task-view__badge--priority-${task.priority}`}>
                     {task.priority}
                 </span>
-
                 <span className="task-view__badge task-view__badge--team">
                     {teamName}
                 </span>
