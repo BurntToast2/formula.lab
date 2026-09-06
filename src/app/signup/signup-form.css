@@ -1,22 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
+
 .signup-wrapper {
     width: 100%;
+    min-height: 100vh;
     box-sizing: border-box;
     display: flex;
+    align-items: center;
     justify-content: center;
     padding: 2rem 1.5rem;
+    background: #313544;
 }
 
 .form {
-    --teal: #29968c;
-    --teal-deep: #2f837d;
-    --teal-light: #8abcb9;
-    --navy: #313544;
-    --navy-panel: #3b3f52;
-    --slate: #51535d;
-    --yellow: #f7d97b;
-    --fog: #d3dde0;
-    --mist: #b3b7bb;
-    --white: #fefefe;
+    --edit-teal: #29968C;
+    --edit-teal-dark: #2F837D;
+    --edit-teal-soft: #8ABCB9;
+    --edit-slate: #3D4152;
+    --edit-white: #FEFEFE;
+    --edit-border-mid: #B3B7BB;
+    --edit-gold: #F7D97B;
+    --edit-danger: #D2694E;
+    --font-cond: 'Rajdhani', sans-serif;
 
     position: relative;
     overflow: hidden;
@@ -27,20 +31,13 @@
     flex-direction: column;
     gap: 1.1rem;
     padding: 2rem 1.75rem 1.75rem;
-    background: var(--navy-panel);
-    border: 1px solid rgba(138, 188, 185, 0.25);
-    border-radius: 0.85rem;
-    clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
-    box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.6);
+    background: var(--edit-slate);
+    border-top: 2px solid var(--edit-teal);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 18px 100%, 0 calc(100% - 18px));
 }
 
 .accent-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--teal) 0%, var(--teal-light) 45%, var(--yellow) 100%);
+    display: none;
 }
 
 .brand {
@@ -54,19 +51,21 @@
 }
 
 .eyebrow {
-    font-family: var(--font-geist-mono), monospace;
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
+    font-family: var(--font-cond);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--teal-light);
+    color: var(--edit-teal-soft);
 }
 
 .title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--white);
-    letter-spacing: -0.01em;
+    font-family: var(--font-cond);
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--edit-white);
 }
 
 .field-row {
@@ -83,54 +82,55 @@
 }
 
 .label {
-    font-family: var(--font-geist-mono), monospace;
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
+    font-family: var(--font-cond);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--mist);
+    color: var(--edit-border-mid);
 }
 
 .input {
     box-sizing: border-box;
     width: 100%;
     padding: 0.6rem 0.75rem;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(211, 221, 224, 0.18);
-    border-radius: 0.4rem;
-    color: var(--white);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--edit-white);
     font-size: 0.95rem;
     outline: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .input::placeholder {
-    color: var(--slate);
+    color: var(--edit-border-mid);
 }
 
 .input:focus {
-    border-color: var(--teal);
-    box-shadow: 0 0 0 3px rgba(41, 150, 140, 0.25);
+    border-color: var(--edit-teal);
+    box-shadow: 0 0 0 3px rgba(41, 150, 140, 0.2);
 }
 
 .button {
     margin-top: 0.4rem;
-    padding: 0.7rem 1rem;
+    padding: 0.8rem 1rem;
     border: none;
-    border-radius: 0.4rem;
-    background: var(--teal);
-    color: var(--navy);
-    font-family: var(--font-geist-mono), monospace;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    border-radius: 6px;
+    background: var(--edit-teal);
+    color: var(--edit-white);
+    font-family: var(--font-cond);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     cursor: pointer;
+    box-shadow: 0 8px 18px rgba(35, 141, 134, 0.2);
     transition: background 0.15s ease, transform 0.1s ease;
 }
 
 .button:hover {
-    background: var(--teal-light);
+    background: var(--edit-teal-dark);
 }
 
 .button:active {
@@ -139,7 +139,7 @@
 
 .button:focus-visible,
 .input:focus-visible {
-    outline: 2px solid var(--yellow);
+    outline: 2px solid var(--edit-gold);
     outline-offset: 2px;
 }
 
@@ -167,38 +167,37 @@
 }
 
 .select option {
-    background: var(--navy-panel);
-    color: var(--white);
+    background: var(--edit-slate);
+    color: var(--edit-white);
 }
 
 .select:invalid,
 .select option[value=""] {
-    color: var(--slate);
+    color: var(--edit-border-mid);
 }
 
 .field-error {
     margin: 0;
-    font-family: var(--font-geist-mono), monospace;
-    font-size: 0.72rem;
-    color: #f2726f;
+    font-size: 0.75rem;
+    color: var(--edit-danger);
     letter-spacing: 0.01em;
 }
 
 .input[aria-invalid="true"] {
-    border-color: #f2726f;
+    border-color: var(--edit-danger);
 }
 
 .input[aria-invalid="true"]:focus {
-    box-shadow: 0 0 0 3px rgba(242, 114, 111, 0.25);
+    box-shadow: 0 0 0 3px rgba(210, 105, 78, 0.25);
 }
 
 .input-readonly {
-    color: var(--mist);
+    color: var(--edit-border-mid);
     cursor: default;
 }
 
 .input-readonly:focus {
-    border-color: rgba(211, 221, 224, 0.18);
+    border-color: rgba(255, 255, 255, 0.1);
     box-shadow: none;
 }
 
@@ -215,12 +214,12 @@
 }
 
 .success-icon {
-  color: #16a34a;
+  color: var(--edit-teal-soft);
   margin-top: 0.5rem;
 }
 
 .success-subtitle {
-  color: #6b7280;
+  color: var(--edit-border-mid);
   margin-bottom: 0.5rem;
 }
 

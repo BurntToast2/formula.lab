@@ -6,6 +6,7 @@ import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 import { validateSignUpCredentials } from "@/app/actions/invitations";
 import { createAccount } from "@/app/actions/invitations";
+import "./signup-form.css";
 
 type FieldErrors = {
     firstName?: string;

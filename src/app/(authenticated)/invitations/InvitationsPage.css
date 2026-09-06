@@ -1,44 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
 :root {
-  --color-teal: #29968c;
-  --color-teal-dark: #2f837d;
-  --color-teal-muted: #5b7a7b;
-  --color-teal-soft: #8abcb9;
-  --color-gray: #b3b7bb;
-  --color-gray-light: #d3dde0;
-  --color-white: #fefefe;
-  --color-slate: #51535d;
-  --color-navy: #313544;
-  --color-yellow: #f7d97b;
-  --color-error: #c4593a;
+  --edit-ink: #313544;
+  --edit-ink-deep: #262933;
+  --edit-teal: #29968C;
+  --edit-teal-dark: #2F837D;
+  --edit-teal-soft: #8ABCB9;
+  --edit-teal-muted: #5b7a7b;
+  --edit-slate: #3D4152;
+  --edit-border: #D3DDE0;
+  --edit-border-mid: #B3B7BB;
+  --edit-white: #FEFEFE;
+  --edit-gold: #F7D97B;
+  --edit-danger: #D2694E;
+  --edit-chip-bg: rgba(138, 188, 185, 0.16);
+  --font-cond: 'Rajdhani', sans-serif;
+}
 
-  --color-chip-bg: #e4f0ef;
+.invite-page {
+  min-height: 100vh;
+  background: var(--edit-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.invite-page__card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--edit-slate);
+  border-top: 2px solid var(--edit-teal);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+  padding: 40px;
+}
+
+.invite-page__heading-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.invite-page__title {
+  margin: 0;
+  font-family: var(--font-cond);
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--edit-white);
+}
+
+.invite-page__count {
+  background: var(--edit-gold);
+  color: #5b4a16;
+  font-family: var(--font-cond);
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 2px 10px;
+  line-height: 18px;
+}
+
+.invite-page__subtitle {
+  margin: 0 0 28px 0;
+  font-size: 13.5px;
+  color: var(--edit-border-mid);
+  line-height: 1.6;
+}
+
+.invite-page__label {
+  display: block;
+  font-family: var(--font-cond);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--edit-border-mid);
+  margin-bottom: 8px;
+}
+
+.invite-page__input-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  min-height: 48px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  cursor: text;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+.invite-page__input-box:focus-within {
+  border-color: var(--edit-teal);
+  box-shadow: 0 0 0 3px rgba(41, 150, 140, 0.2);
+}
+.invite-page__input-box--error {
+  border-color: var(--edit-danger);
+}
+
+.invite-page__input {
+  flex: 1;
+  min-width: 160px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--edit-white);
+  padding: 4px;
+}
+.invite-page__input::placeholder {
+  color: var(--edit-border-mid);
+}
+
+.invite-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--edit-chip-bg);
+  color: var(--edit-teal-soft);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 4px 6px 4px 10px;
+}
+
+.invite-page__error {
+  margin: 8px 0 0 0;
+  font-size: 12.5px;
+  color: var(--edit-danger);
+}
+
+.invite-page__success {
+  margin: 12px 0 0 0;
+  font-size: 13px;
+  color: var(--edit-teal-soft);
 }
 
 .invite-chip-remove {
-  color: var(--color-teal-dark);
+  color: var(--edit-teal-soft);
   opacity: 0.7;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  padding: 0 2px;
 }
-
 .invite-chip-remove:hover {
   opacity: 1;
 }
 
 .invite-send-btn {
-  background-color: var(--color-teal);
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px;
+  font-family: var(--font-cond);
+  font-size: 14.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--edit-white);
+  background-color: var(--edit-teal);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
   box-shadow: 0 8px 18px rgba(35, 141, 134, 0.2);
+  transition: background-color 0.15s ease;
 }
-
 .invite-send-btn:hover:not(:disabled) {
-  background-color: var(--color-teal-dark);
+  background-color: var(--edit-teal-dark);
 }
-
 .invite-send-btn:disabled {
-  background-color: var(--color-teal-muted);
+  background-color: var(--edit-teal-muted);
   cursor: default;
 }
 
 .invite-chip-remove:focus-visible,
 .invite-send-btn:focus-visible {
-  outline: 2px solid var(--color-yellow);
+  outline: 2px solid var(--edit-gold);
   outline-offset: 3px;
 }
