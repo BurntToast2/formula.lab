@@ -1,22 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
+
 @property --edit-gradient-angle {
   syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
 }
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
 
 :root {
   --edit-ink: #313544;
   --edit-teal: #29968C;
   --edit-teal-dark: #2F837D;
   --edit-teal-soft: #8ABCB9;
-  --edit-slate: #3D4152;
+  --edit-slate: #51535D;
   --edit-border: #D3DDE0;
   --edit-border-mid: #B3B7BB;
   --edit-white: #FEFEFE;
   --edit-gold: #F7D97B;
-  --edit-danger: #D2694E;
-  --font-cond: 'Rajdhani', sans-serif;
+  --edit-danger: #E5A19A;
 }
 
 .edit-task-form {
@@ -26,12 +26,21 @@
   width: 100%;
   padding: 32px;
   background: var(--edit-slate);
-  border-top: 2px solid var(--edit-teal);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 3px solid var(--edit-gold);
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
   position: relative;
   overflow: hidden;
+  transition: box-shadow 0.25s ease;
 }
 
+.edit-task-form:hover {
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.32);
+}
+
+/* animated shimmer while a save is in flight, mirroring the
+   "extracting" state on the CMM section cards */
 .edit-task-form::before {
   content: '';
   position: absolute;
@@ -51,7 +60,7 @@
 }
 
 .edit-task-form--saving::before {
-  opacity: 0.14;
+  opacity: 0.18;
   animation: edit-task-gradient-spin 3s linear infinite;
 }
 
@@ -74,11 +83,8 @@
 
 .edit-task-form__title {
   margin: 0;
-  font-family: var(--font-cond);
-  font-size: 24px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+  font-size: 20px;
+  font-weight: 600;
   color: var(--edit-white);
 }
 
@@ -95,25 +101,21 @@
 }
 
 .edit-task-form__label {
-  font-family: var(--font-cond);
   font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-weight: 500;
   color: var(--edit-border-mid);
 }
 
 .edit-task-form__input {
   width: 100%;
-  border-radius: 0;
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
   padding: 8px 12px;
   font-size: 14px;
   color: var(--edit-white);
   outline: none;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .edit-task-form__input::placeholder {
@@ -122,7 +124,8 @@
 
 .edit-task-form__input:focus {
   border-color: var(--edit-teal-soft);
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 0 0 3px rgba(138, 188, 185, 0.18);
 }
 
 .edit-task-form__input option {
@@ -144,8 +147,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  padding: 4px 10px 4px 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 4px 8px 4px 4px;
   font-size: 12px;
 }
 
@@ -155,12 +159,11 @@
   justify-content: center;
   width: 20px;
   height: 20px;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 20% 100%);
+  border-radius: 50%;
   background: var(--edit-teal);
   color: var(--edit-white);
-  font-family: var(--font-cond);
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 9px;
+  font-weight: 600;
 }
 
 .edit-task-form__chip-name {
@@ -193,6 +196,7 @@
   margin-top: 4px;
   width: 100%;
   overflow: hidden;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: var(--edit-ink);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
@@ -221,12 +225,11 @@
   justify-content: center;
   width: 24px;
   height: 24px;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 20% 100%);
+  border-radius: 50%;
   background: var(--edit-teal);
   color: var(--edit-white);
-  font-family: var(--font-cond);
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 600;
   flex-shrink: 0;
 }
 
@@ -266,15 +269,12 @@
 }
 
 .edit-task-form__cancel-btn {
+  border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: none;
   padding: 10px 20px;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-  font-family: var(--font-cond);
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+  font-size: 13.5px;
+  font-weight: 600;
   color: var(--edit-border);
   cursor: pointer;
   transition: background-color 0.15s ease, transform 0.1s ease;
@@ -294,22 +294,20 @@
 }
 
 .edit-task-form__save-btn {
+  border-radius: 10px;
   border: none;
   background: var(--edit-teal);
   padding: 10px 20px;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-  font-family: var(--font-cond);
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--edit-ink);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--edit-white);
   cursor: pointer;
-  transition: transform 0.1s ease, background-color 0.2s ease;
+  transition: transform 0.1s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .edit-task-form__save-btn:hover:not(:disabled) {
-  background: var(--edit-teal-soft);
+  background: var(--edit-teal-dark);
+  box-shadow: 0 6px 16px rgba(41, 150, 140, 0.3);
 }
 
 .edit-task-form__save-btn:active:not(:disabled) {
@@ -324,20 +322,18 @@
 .edit-task-form__delete {
   margin-left: auto;
   background: none;
-  border: 1px solid rgba(210, 105, 78, 0.4);
+  border: 1px solid rgba(229, 161, 154, 0.35);
   color: var(--edit-danger);
-  font-family: var(--font-cond);
   font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+  font-weight: 600;
   padding: 8px 14px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.15s ease, transform 0.1s ease;
 }
 
 .edit-task-form__delete:hover {
-  background: rgba(210, 105, 78, 0.12);
+  background: rgba(229, 161, 154, 0.12);
 }
 
 .edit-task-form__delete:active {
@@ -364,12 +360,11 @@
 .edit-task-form__delete-confirm-yes {
   background: var(--edit-danger);
   color: var(--edit-ink);
-  font-family: var(--font-cond);
   font-size: 13px;
   font-weight: 700;
-  text-transform: uppercase;
   padding: 8px 14px;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
 }
 
@@ -384,13 +379,15 @@
   color: var(--edit-border-mid);
   font-size: 13px;
   padding: 8px 14px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
 .edit-task-form__delete-error {
   color: var(--edit-danger);
-  background: rgba(210, 105, 78, 0.1);
-  border: 1px solid rgba(210, 105, 78, 0.3);
+  background: rgba(229, 161, 154, 0.1);
+  border: 1px solid rgba(229, 161, 154, 0.3);
+  border-radius: 8px;
   padding: 10px 14px;
   font-size: 13px;
   margin: 0;
