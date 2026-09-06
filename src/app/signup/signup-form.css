@@ -205,3 +205,27 @@
 .form-error {
     margin-bottom: 0.25rem;
 }
+
+.success-panel {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.success-icon {
+  color: #16a34a;
+  margin-top: 0.5rem;
+}
+
+.success-subtitle {
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.button-link {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+}

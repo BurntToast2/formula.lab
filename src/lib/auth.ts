@@ -15,50 +15,50 @@ export const auth = betterAuth({
             "http://192.168.1.77:3000",
             "https://formulalab-six.vercel.app",
     ],
-    database: drizzleAdapter(db, {
-        provider: "pg",
-        schema: {
-            users,
-            account,
-            session,
-            verification,
-        },
-    }),
-
-    advanced: {
-        database: {
-            generateId: () => randomUUID(),
-        },
-    },
-
-    user: {
-        modelName: "users",
-
-        additionalFields: {
-            firstName: {
-                type: "string",
-                required: true,
-                input: true,
+        database: drizzleAdapter(db, {
+            provider: "pg",
+            schema: {
+                users,
+                account,
+                session,
+                verification,
             },
-            surname: {
-                type: "string",
-                required: true,
-                input: true,
-            },
-            teamId: {
-                type: "string",
-                required: true,
-                input: true,
-            },
-            role: {
-                type: "string",
-                required: true,
-                input: true,
+        }),
+
+        advanced: {
+            database: {
+                generateId: () => randomUUID(),
             },
         },
-    },
 
-    emailAndPassword: {
-        enabled: true,
-    },
+        user: {
+            modelName: "users",
+
+            additionalFields: {
+                firstName: {
+                    type: "string",
+                    required: true,
+                    input: true,
+                },
+                surname: {
+                    type: "string",
+                    required: true,
+                    input: true,
+                },
+                teamId: {
+                    type: "string",
+                    required: true,
+                    input: true,
+                },
+                role: {
+                    type: "string",
+                    required: true,
+                    input: true,
+                },
+            },
+        },
+
+        emailAndPassword: {
+            enabled: true,
+        },
 });

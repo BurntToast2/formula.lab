@@ -2,29 +2,27 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import "./signup-form.css";
-import { validateSignUpCredentials, createAccount } from "@/app/actions/invitations"
+import Link from "next/link";
+import { CheckCircle2 } from "lucide-react";
+import { validateSignUpCredentials } from "@/app/actions/invitations";
+import { createAccount } from "@/app/actions/invitations";
 
-type SignupFormProps = {
-    email: string;
-    token: string;
-}
+type FieldErrors = {
+    firstName?: string;
+    surname?: string;
+    teamName?: string;
+    password?: string;
+};
 
-export default function SignUpForm({email, token}: SignupFormProps) {
+export default function SignUpForm({ token, email }: { token: string; email: string }) {
     const [firstName, setFirstName] = useState("");
     const [surname, setSurname] = useState("");
     const [password, setPassword] = useState("");
     const [team, setTeam] = useState("");
-    const [submitting, setSubmitting] = useState(false);
-
-    const [errors, setErrors] = useState<{
-        firstName?: string;
-        surname?: string;
-        email?: string;
-        password?: string;
-        teamName?: string;
-    }>({});
+    const [errors, setErrors] = useState<FieldErrors>({});
     const [formError, setFormError] = useState<string | null>(null);
+    const [submitting, setSubmitting] = useState(false);
+    const [accountCreated, setAccountCreated] = useState(false);
 
     async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -70,6 +68,35 @@ export default function SignUpForm({email, token}: SignupFormProps) {
             }
             return;
         }
+
+        setAccountCreated(true);
+    }
+
+    if (accountCreated) {
+        return (
+            <div className="signup-wrapper">
+                <div className="form success-panel">
+                    <div className="accent-bar" />
+                    <div className="brand">
+                        <Image src="/setu-logo.png" alt="SETU" width={32} height={32} className="brand-mark" />
+                        <span className="eyebrow">SETU Formula Student</span>
+                    </div>
+
+                    <div className="success-icon">
+                        <CheckCircle2 size={48} strokeWidth={1.5} />
+                    </div>
+
+                    <h1 className="title">Account created</h1>
+                    <p className="success-subtitle">
+                        Welcome to the {team} team, {firstName}. Your account is ready to go.
+                    </p>
+
+                    <Link href="/login" className="button button-link">
+                        Go to login
+                    </Link>
+                </div>
+            </div>
+        );
     }
 
     return (

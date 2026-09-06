@@ -157,7 +157,7 @@ export default function TaskView({
                     </button>
                 )}
 
-                {canEdit || canComplete && task.status !== "completed" && task.status !== "cancelled" ? (
+                {canEdit || canComplete && task.status !== "completed" && task.status !== "cancelled"? (
                     <button
                         type="button"
                         onClick={handleMarkAsDone}
