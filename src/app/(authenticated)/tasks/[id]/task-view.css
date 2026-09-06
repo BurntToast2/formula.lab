@@ -170,8 +170,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  color: var(--edit-gold);
-  background: none;
+  color: var(--edit-border);
+  background: var(--edit-gold);
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.15s ease, transform 0.1s ease;
