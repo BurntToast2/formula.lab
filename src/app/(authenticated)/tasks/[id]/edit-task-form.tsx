@@ -296,7 +296,6 @@ export default function EditTaskForm({
                         }}
                         onFocus={() => setShowResults(true)}
                         onBlur={() =>
-                            // slight delay so the click on a result registers first
                             setTimeout(() => setShowResults(false), 120)
                         }
                     />
