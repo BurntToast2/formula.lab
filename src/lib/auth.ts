@@ -14,6 +14,8 @@ export const auth = betterAuth({
         "http://localhost:3000",
             "http://192.168.1.77:3000",
             "https://formulalab-six.vercel.app",
+            "https://setuformularacing.ie",
+            "https://www.setuformularacing.ie"
     ],
         database: drizzleAdapter(db, {
             provider: "pg",
