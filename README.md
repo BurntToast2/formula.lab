@@ -3,6 +3,8 @@
 
 Formula Lab is a web-based team and task management platform built for SETU Formula Student. It gives student engineering teams a shared workspace to organise tasks, assign responsibilities, track progress, and onboard new members.
 
+Live site: https://setuformularacing.ie
+
 ## Features
 
 - Email and password authentication
