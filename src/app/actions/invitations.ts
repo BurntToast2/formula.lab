@@ -63,7 +63,7 @@ export async function createInvitation(email: string) {
         const inviteLink = `${APP_URL}/invite/${token}`;
 
         const { error } = await resend.emails.send({
-            from: "SETU Formula Student <onboarding@resend.dev>",
+            from: "SETU Formula Student <noreply@setuformularacing.ie>",
             to: email,
             subject: "You're invited to join the team",
             html: buildInviteEmailHtml(inviteLink),
