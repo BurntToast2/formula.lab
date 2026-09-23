@@ -14,7 +14,15 @@ import {
 export const userRole = pgEnum("user_role", [
     "team_leader",
     "member",
-    "admin"
+    "admin",
+    "Team Principal",
+    "Technical Director",
+    "Operations Manager",
+    "Head of Chassis",
+    "Head of Electronics",
+    "Head of Suspension",
+    "Head of Brakes",
+    "Head of Drivetrain"
 ]);
 
 export const taskStatus = pgEnum("task_status", [
