@@ -60,7 +60,7 @@ export async function createInvitation(email: string) {
             expiresAt,
         });
 
-        const inviteLink = `${APP_URL}/invite/${token}`;
+        const inviteLink = `${APP_URL}/signup?token=${token}`;
 
         const { error } = await resend.emails.send({
             from: "SETU Formula Student <noreply@setuformularacing.ie>",
