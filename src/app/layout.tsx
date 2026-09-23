@@ -18,8 +18,8 @@ const rajdhani = Rajdhani({
 });
 
 export const metadata: Metadata = {
-  title: "Formula Lab",
-  description: "Formula Lab task management",
+    title: "Setu Formula Racing | Formula Student Team", 
+    description: "Setu Formula Racing is a Formula Student team from SETU, designing, building and racing a single-seat race car.",
 };
 
 export default function RootLayout({
