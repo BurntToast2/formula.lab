@@ -80,6 +80,17 @@ export const users = pgTable(
     ],
 );
 
+export const resets = pgTable("resets", {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id") 
+        .notNull()
+        .references(() => users.id),
+    token: text("token").notNull().unique(),
+    expiresAt: timestamp("expires_at").notNull(),
+    acceptedAt: timestamp("accepted_at"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 export const tasks = pgTable("tasks", {
     id: uuid("id").primaryKey().defaultRandom(),
     title: text("title").notNull(),

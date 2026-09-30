@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db";
-import { users, invitations, teams } from "@/db/schema";
+import { users, invitations, resets, account, teams } from "@/db/schema";
 import { and, eq, gt, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { randomBytes } from "crypto";
@@ -83,6 +83,116 @@ export async function createInvitation(email: string) {
     }
 }
 
+export async function createResetLink(email: string) {
+    email = email.trim().toLowerCase();
+
+    try {
+        const [user] = await db
+            .select({ id: users.id })
+            .from(users)
+            .where(eq(users.email, email))
+            .limit(1);
+
+        if (!user) {
+            return {
+                success: false as const,
+                error: "Not a registered email"
+            }
+        }
+
+    const token = randomBytes(32).toString("hex");
+
+    const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
+
+    await db.insert(resets).values({
+        userId: user.id,
+        token,
+        expiresAt
+    });
+
+    const resetLink = `${APP_URL}/reset?token=${token}`;
+
+    const { error } = await resend.emails.send({
+        from: "SETU Formula Racing <noreply@setuformularacing.ie>",
+        to: email,
+        subject: "Reset your password",
+        html: buildResetEmailHtml(resetLink)
+    });
+
+    if (error) {
+        throw new Error(
+            `Reset link saved for ${email}, but the email failed to send. ${error.message}`,
+        );
+    }
+
+    return true;
+
+    } catch (error) {
+        console.error("RESET PASSWORD ERROR: ", error);
+
+        throw error;
+    }
+}
+
+function buildResetEmailHtml(resetLink: string) {
+    return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" />
+        </head>
+    <body style="margin:0; padding:0; background-color:#313544; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#313544" style="background-color:#313544; padding:32px 16px;">
+    <tr>
+    <td align="center">
+    <table role="presentation" width="400" cellpadding="0" cellspacing="0" bgcolor="#3D4152" style="background-color:#3D4152; border-top:2px solid #29968C; clip-path:polygon(0 0,100% 0,100% 100%,18px 100%,0 calc(100% - 18px)); max-width:400px; width:100%;">
+    <tr>
+    <td style="padding:40px;">
+
+    <img src="${LOGO_URL}" alt="SETU" width="96" height="96" style="display:block; margin:0 auto 20px;" />
+
+    <h1 style="margin:0 0 6px; font-family:'Rajdhani','Arial Narrow',Arial,sans-serif; font-size:26px; font-weight:700; text-transform:uppercase; letter-spacing:0.02em; color:#FEFEFE; text-align:center;">
+    Reset your password
+    </h1>
+
+    <p style="margin:0 0 28px; font-size:13.5px; line-height:1.6; color:#B3B7BB; text-align:center;">
+    We received a request to reset the password for your Formula.lab account.
+            Click the button below to choose a new one.
+                </p>
+
+        <a href="${resetLink}" style="display:block; background-color:#29968C; color:#FEFEFE; font-family:'Rajdhani','Arial Narrow',Arial,sans-serif; font-size:14.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; text-align:center; text-decoration:none; padding:12px; border-radius:6px;">
+        Reset password
+        </a>
+
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:24px;">
+        <tr>
+        <td bgcolor="#434758" style="background-color:#434758; border-left:3px solid #F7D97B; padding:12px 14px; font-size:13px; line-height:1.5; color:#B3B7BB;">
+        This link expires in 30 minutes and can only be used once.
+            </td>
+        </tr>
+        </table>
+
+        <p style="margin:24px 0 0; font-size:12.5px; line-height:1.5; color:#B3B7BB; text-align:center;">
+        If you didn't request this, you can safely ignore this email. Your password won't change.
+            </p>
+
+        <p style="margin:14px 0 0; font-size:12px; color:#8ABCB9; text-align:center; word-break:break-all;">
+        Or paste this link into your browser: ${resetLink}
+        </p>
+
+        </td>
+        </tr>
+        </table>
+        </td>
+        </tr>
+        </table>
+        </body>
+        </html>
+        `.trim();
+}
+
 function buildInviteEmailHtml(inviteLink: string) {
     return `
     <!DOCTYPE html>
@@ -106,8 +216,8 @@ function buildInviteEmailHtml(inviteLink: string) {
 
     <p style="margin:12px 0 0; font-size:14px; line-height:1.6; color:#51535D; text-align:center;">
     You've been invited to join the SETU Formula Student team workspace.
-    This invite expires in 7 days.
-    </p>
+        This invite expires in 7 days.
+        </p>
     </td>
     </tr>
 
@@ -130,6 +240,22 @@ function buildInviteEmailHtml(inviteLink: string) {
     </body>
     </html>
     `.trim();
+}
+
+export async function getResetByToken(token: string) {
+    const reset = await db
+        .select()
+        .from(resets)
+        .where(
+            and(
+                eq(resets.token, token),
+                isNull(resets.acceptedAt),
+                gt(resets.expiresAt, new Date()),
+            ),
+        )
+        .limit(1);
+
+    return reset[0] ?? null;
 }
 
 export async function getInvitationByToken(token: string) {
@@ -259,3 +385,73 @@ export async function createAccount(
     }
 }
 
+export async function resetPassword(
+    token: string,
+    email: string,
+    newPassword: string,
+    confirmPassword: string
+) {
+    try {
+        const resetApproval = await getResetByToken(token);
+
+        if (!resetApproval) {
+            return {
+                success: false as const,
+                error: "Invalid or expired token"
+            };
+        }
+
+        const [user] = await db
+            .select({ id: users.id })
+            .from(users)
+            .where(eq(users.email, email))
+            .limit(1);
+
+        if (!user) {
+            return {
+                success: false as const,
+                error: "User does not exist"
+            };
+        }
+
+        const [password] = await db
+            .select({ id: account.userId })
+            .from(account)
+            .where(eq(account.userId, user.id))
+            .limit(1);
+
+        if (!password) {
+            return {
+                success: false as const,
+                error: "User does not exist"
+            };
+        }
+
+        if (newPassword !== confirmPassword) {
+            return {
+                success: false as const,
+                error: "Passwords don't match"
+            }
+        }
+
+        const ctx = await auth.$context; 
+        const hash = await ctx.password.hash(newPassword);
+        await ctx.internalAdapter.updatePassword(user.id, hash);
+
+        return { success: true as const };
+    } catch (error) {
+        console.log("RESET PASSWORD ERROR: ", error);
+
+        if (error instanceof Error) {
+            return {
+                success: false as const,
+                error: error.message
+            };
+        }
+
+        return {
+            success: false as const,
+            error: "Something went wrong while resetting your password"
+        };
+    }
+}
