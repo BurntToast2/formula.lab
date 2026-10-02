@@ -38,8 +38,8 @@ export default function SignUpForm({ token, email }: { token: string; email: str
 
         if (!result.success) {
             const newErrors: typeof errors = {};
-            for (const field in result.errors) {
-                const messages = result.errors[field as keyof typeof result.errors];
+            for (const field in result.data) {
+                const messages = result.data[field as keyof typeof result.data];
                 if (messages?.[0]) {
                     newErrors[field as keyof typeof newErrors] = messages[0];
                 }

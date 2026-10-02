@@ -110,7 +110,7 @@ export async function createResetLink(email: string) {
         expiresAt
     });
 
-    const resetLink = `${APP_URL}/reset?token=${token}`;
+    const resetLink = `${APP_URL}/password?token=${token}`;
 
     const { error } = await resend.emails.send({
         from: "SETU Formula Racing <noreply@setuformularacing.ie>",
@@ -125,7 +125,7 @@ export async function createResetLink(email: string) {
         );
     }
 
-    return true;
+    return { success: true as const };
 
     } catch (error) {
         console.error("RESET PASSWORD ERROR: ", error);
@@ -281,6 +281,22 @@ const signUpSchema = z.object({
     teamName: z.string().min(1, "Please select a team"),
 });
 
+const passwordOnlySchema = signUpSchema.pick( {password: true});
+export async function validatePassword(
+    password: string
+) {
+    const result = passwordOnlySchema.safeParse({ password });
+
+    if (!result.success) {
+        return {
+            success: false as const,
+            errors: z.flattenError(result.error).fieldErrors,
+        };
+    }
+
+    return { success: true as const, data: result.data };
+}
+
 export async function validateSignUpCredentials(
     firstName: string,
     surname: string,
@@ -297,7 +313,7 @@ export async function validateSignUpCredentials(
     if (!result.success) {
         return {
             success: false as const,
-            errors: z.flattenError(result.error).fieldErrors,
+            data: z.flattenError(result.error).fieldErrors,
         };
     }
 
@@ -325,10 +341,10 @@ export async function createAccount(
         }
 
         const [team] = await db
-            .select({ id: teams.id })
-            .from(teams)
-            .where(eq(teams.name, teamName))
-            .limit(1);
+        .select({ id: teams.id })
+        .from(teams)
+        .where(eq(teams.name, teamName))
+        .limit(1);
 
         if (!team) {
             return {
@@ -359,11 +375,11 @@ export async function createAccount(
         }
 
         await db
-            .update(invitations)
-            .set({
-                acceptedAt: new Date(),
-            })
-            .where(eq(invitations.token, token));
+        .update(invitations)
+        .set({
+            acceptedAt: new Date(),
+        })
+        .where(eq(invitations.token, token));
 
         return {
             success: true as const,
@@ -387,7 +403,6 @@ export async function createAccount(
 
 export async function resetPassword(
     token: string,
-    email: string,
     newPassword: string,
     confirmPassword: string
 ) {
@@ -402,30 +417,12 @@ export async function resetPassword(
         }
 
         const [user] = await db
-            .select({ id: users.id })
-            .from(users)
-            .where(eq(users.email, email))
+            .select()
+            .from(resets)
+            .where(
+                eq(resets.token, token)
+            )
             .limit(1);
-
-        if (!user) {
-            return {
-                success: false as const,
-                error: "User does not exist"
-            };
-        }
-
-        const [password] = await db
-            .select({ id: account.userId })
-            .from(account)
-            .where(eq(account.userId, user.id))
-            .limit(1);
-
-        if (!password) {
-            return {
-                success: false as const,
-                error: "User does not exist"
-            };
-        }
 
         if (newPassword !== confirmPassword) {
             return {
