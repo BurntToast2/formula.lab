@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db";
-import { users, invitations, resets, account, teams } from "@/db/schema";
+import { users, invitations, resets, account, teams, session } from "@/db/schema";
 import { and, eq, gt, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { randomBytes } from "crypto";
@@ -255,21 +255,21 @@ export async function getResetByToken(token: string) {
         )
         .limit(1);
 
-    return reset[0] ?? null;
+        return reset[0] ?? null;
 }
 
 export async function getInvitationByToken(token: string) {
     const invitation = await db
-        .select()
-        .from(invitations)
-        .where(
-            and(
-                eq(invitations.token, token),
-                isNull(invitations.acceptedAt),
-                gt(invitations.expiresAt, new Date()),
-            ),
-        )
-        .limit(1);
+    .select()
+    .from(invitations)
+    .where(
+        and(
+            eq(invitations.token, token),
+            isNull(invitations.acceptedAt),
+            gt(invitations.expiresAt, new Date()),
+        ),
+    )
+    .limit(1);
 
     return invitation[0] ?? null;
 }
@@ -407,48 +407,46 @@ export async function resetPassword(
     confirmPassword: string
 ) {
     try {
-        const resetApproval = await getResetByToken(token);
-
-        if (!resetApproval) {
-            return {
-                success: false as const,
-                error: "Invalid or expired token"
-            };
+        const reset = await getResetByToken(token);
+        if (!reset) {
+            return { success: false as const, error: "This reset link is invalid or has expired." };
         }
-
-        const [user] = await db
-            .select()
-            .from(resets)
-            .where(
-                eq(resets.token, token)
-            )
-            .limit(1);
 
         if (newPassword !== confirmPassword) {
-            return {
-                success: false as const,
-                error: "Passwords don't match"
-            }
+            return { success: false as const, error: "Passwords don't match" };
         }
 
-        const ctx = await auth.$context; 
-        const hash = await ctx.password.hash(newPassword);
-        await ctx.internalAdapter.updatePassword(user.id, hash);
-
-        return { success: true as const };
-    } catch (error) {
-        console.log("RESET PASSWORD ERROR: ", error);
-
-        if (error instanceof Error) {
+        const validation = await validatePassword(newPassword);
+        if (!validation.success) {
             return {
                 success: false as const,
-                error: error.message
+                error: validation.errors.password?.[0] ?? "Password does not meet the requirements.",
             };
         }
 
-        return {
-            success: false as const,
-            error: "Something went wrong while resetting your password"
-        };
+        const ctx = await auth.$context;
+        const hash = await ctx.password.hash(newPassword);
+
+        const updated = await db
+            .update(account)
+            .set({ password: hash })
+            .where(and(eq(account.userId, reset.userId), eq(account.providerId, "credential")))
+            .returning({ id: account.id });
+
+        console.log("ROWS UPDATED:", updated.length);
+
+        if (updated.length === 0) {
+            return { success: false as const, error: "Could not find an account to update." };
+        }
+
+        await db.update(resets).set({ acceptedAt: new Date() }).where(eq(resets.id, reset.id));
+
+        await db.delete(session).where(eq(session.userId, reset.userId));
+
+        return { success: true as const };
+
+    } catch (error) {
+        console.error("RESET PASSWORD ERROR: ", error);
+                      return { success: false as const, error: "Something went wrong. Please try again." };
     }
 }
