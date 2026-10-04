@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { InferSelectModel } from "drizzle-orm";
 
 import { tasks, teams } from "@/db/schema";
 import EditTaskForm from "./edit-task-form";
 import { markTaskAsDone } from "@/app/actions/tasks";
+
 import "./task-view.css";
 
 type Task = InferSelectModel<typeof tasks>;
@@ -50,6 +52,7 @@ export default function TaskView({
     const [editing, setEditing] = useState(false);
     const [completing, setCompleting] = useState(false);
     const [completeError, setCompleteError] = useState("");
+    const [showDone, setShowDone] = useState(false);
 
     if (editing) {
         return (
@@ -78,7 +81,15 @@ export default function TaskView({
             return;
         }
 
-        window.location.reload();
+        setShowDone(true);
+        await new Promise((resolve) => setTimeout(resolve, 1100));
+
+        const router = useRouter();
+        router.push('/tasks');
+        router.refresh();
+
+        // window.location.reload();
+        // window.location.href = '/tasks';
     }
 
     return (
@@ -154,20 +165,26 @@ export default function TaskView({
                         Edit task
                     </button>
                 )}
-
-                {canEdit || canComplete && task.status !== "completed" && task.status !== "cancelled"? (
-                    <button
+                {(canEdit || canComplete) &&
+                    task.status !== "completed" &&
+                    task.status !== "cancelled" ? (
+                        <button
                         type="button"
                         onClick={handleMarkAsDone}
                         disabled={completing}
-                        className="task-view__done-btn"
-                    >
-                        {completing ? "Marking as done..." : "Done"}
-                    </button>
+                        className={`task-view__done-btn${showDone ? " task-view__done-btn--success" : ""}`}
+                        >
+                        {showDone && (
+                            <svg className="task-view__done-check" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 13l4 4L19 7" />
+                            </svg>
+                        )}
+                        {showDone ? "Completed" : completing ? "Marking as done..." : "Done"}
+                        </button>
                 ) : (
-                    <Link href="/tasks" className="task-view__done-btn">
-                        Back to tasks
-                    </Link>
+                <Link href="/tasks" className="task-view__done-btn">
+                Back to tasks
+                </Link>
                 )}
             </div>
         </div>
