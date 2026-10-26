@@ -7,6 +7,7 @@ import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { db } from "@/db";
 import { tasks, taskResponsibilities, teams, users } from "@/db/schema";
+import Email from "@/app/actions/taskEmails";
 
 
 const createTaskSchema = z.object({
@@ -171,6 +172,9 @@ export async function createTask(input: {
                     userId,
                 }))
             );
+
+            let email = new Email();
+            email.sendTaskEmails(assigneeIds);
         }
 
         return {
