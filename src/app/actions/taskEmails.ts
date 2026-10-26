@@ -2,9 +2,10 @@ import { Resend } from "resend";
 import { users } from "@/db/schema";
 import { db } from "@/db";
 import { eq } from "drizzle-orm";
+import { taskEmailHtml } from "@/emails/taskEmail";
 
 export default class Email {
-    async sendTaskEmails(usersT: string[]) {
+    async sendTaskEmails(usersT: string[], taskData: {title: string, description?: string, dueDate?: string}) {
         const resend = new Resend();
 
         for (let i = 0; i < usersT.length; i++) {
@@ -14,12 +15,14 @@ export default class Email {
                 .where(eq(users.id, usersT[i]))
                 .limit(1);
             
+            console.log('This is the task', taskData);
+
             try {
                 const { error } = await resend.emails.send({
                     from: 'SETU Formula Racing <noreply@setuformularacing.ie>',
                     to: [`${user.email}`],
                     subject: 'New Task Added',
-                    html: '<p>The task is going here</p>'
+                    html: taskEmailHtml({ title: taskData.title, description: taskData.description, dueDate: taskData.dueDate }, user.name)
                 });
 
                 if (error) {

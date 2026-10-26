@@ -2,11 +2,11 @@
 
 import { headers } from "next/headers";
 import { and, eq, inArray } from "drizzle-orm";
-import { z } from "zod";
+import { email, z } from "zod";
 
 import { auth } from "@/lib/auth";
 import { db } from "@/db";
-import { tasks, taskResponsibilities, teams, users } from "@/db/schema";
+import { tasks, taskResponsibilities, teams, users, userRole } from "@/db/schema";
 import Email from "@/app/actions/taskEmails";
 
 
@@ -174,7 +174,48 @@ export async function createTask(input: {
             );
 
             let email = new Email();
-            email.sendTaskEmails(assigneeIds);
+            email.sendTaskEmails(assigneeIds, {title, description, dueDate});
+        } else {
+            let [team] = await db
+                .select()
+                .from(teams)
+                .where(eq(teams.id, teamId))
+                .limit(1);
+
+            const teamName = team.name;
+
+            type UserRole = typeof userRole.enumValues[number];
+            const headTitles: Record<string, UserRole> = {
+                Brakes: 'Head of Brakes',
+                Suspension: 'Head of Suspension',
+                Drivetrain: 'Head of Drivetrain',
+                Electronics: 'Head of Electronics',
+                Chassis: 'Head of Chassis'
+            };
+
+            const teamHeadTitle = headTitles[teamName];
+            if (!teamHeadTitle) {
+                return {
+                    success: false as const,
+                    errors: `No head role for team: ${teamName}` 
+                };
+            }  
+
+            let [teamHead] = await db
+                .select()
+                .from(users)
+                .where(eq(users.role, teamHeadTitle))
+                .limit(1);
+
+            if (!teamHead) {
+                return {
+                    success: false as const,
+                    errors: `No user for team head title: ${teamHeadTitle}`
+                };
+            }
+
+            let email = new Email();
+            email.sendTaskEmails([teamHead.id], { title, description, dueDate });
         }
 
         return {
