@@ -53,12 +53,13 @@ export default function TaskCard({ task }: { task: Task }) {
             {dueDate && (
                 <p className={`task-card__due ${isOverdue ? "task-card__due--overdue" : ""}`}>
                     Due{" "}
-                    {dueDate.toLocaleDateString(undefined, {
+                    {dueDate.toLocaleDateString("en-IE", {
                         month: "short",
                         day: "numeric",
+                        timeZone: "Europe/Dublin",
                     })}
                 </p>
-            )}
+            )} 
         </Link>
     );
 }
