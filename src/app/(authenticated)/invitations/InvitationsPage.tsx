@@ -91,7 +91,7 @@ export default function InvitationsPage() {
       setErrorMessage(
         failed.length === emails.length
           ? `Couldn't send any invitations.${detail ? ` ${detail}` : ""}`
-          : `Sent ${emails.length - failed.length} of ${emails.length}. ${failed.length} failed — check the address${failed.length !== 1 ? "es" : ""} below.`
+          : `Sent ${emails.length - failed.length} of ${emails.length}. ${failed.length} failed — check the address${failed.length !== 1 ? "es" : ""}`
       );
     }
   }

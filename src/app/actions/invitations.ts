@@ -42,22 +42,23 @@ export async function createInvitation(email: string) {
         throw new Error("Imposter!");
     }
 
-    const result = emailSchema.safeParse(email);
-
-    if (!result.success) {
-        throw new Error("Only @setu.ie email addresses can be invited.");
-    }
-
     const inviteEmails = await db
         .select()
         .from(invitations)
         .where(eq(invitations.email, email))
         .limit(1);
 
-    console.log(inviteEmails);
+    console.log('hell');
+    console.log('Invite emails: ', inviteEmails);
 
     if (inviteEmails.length > 0) {
         throw new Error("This user is already registered!");
+    }
+
+    let result = emailSchema.safeParse(email);
+
+    if (!result.success) {
+        throw new Error("Only @setu.ie email addresses can be invited.");
     }
 
     const token = randomBytes(32).toString("hex");
