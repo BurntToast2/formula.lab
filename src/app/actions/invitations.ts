@@ -48,6 +48,16 @@ export async function createInvitation(email: string) {
         throw new Error("Only @setu.ie email addresses can be invited.");
     }
 
+    const inviteEmails = await db
+        .select()
+        .from(invitations)
+        .where(eq(invitations.email, email))
+        .limit(1);
+
+    if (inviteEmails.length > 1) {
+        throw new Error("This user is already registered!");
+    }
+
     const token = randomBytes(32).toString("hex");
 
     const expiresAt = new Date();
