@@ -54,7 +54,9 @@ export async function createInvitation(email: string) {
         .where(eq(invitations.email, email))
         .limit(1);
 
-    if (inviteEmails.length > 1) {
+    console.log(inviteEmails);
+
+    if (inviteEmails.length > 0) {
         throw new Error("This user is already registered!");
     }
 
