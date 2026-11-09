@@ -44,8 +44,8 @@ export async function createInvitation(email: string) {
 
     const inviteEmails = await db
         .select()
-        .from(invitations)
-        .where(eq(invitations.email, email))
+        .from(users)
+        .where(eq(users.email, email))
         .limit(1);
 
     console.log('hell');
