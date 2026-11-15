@@ -68,7 +68,7 @@ export default async function TaskPage({
         })
         .from(users);
 
-    const canEdit = user.role === "team_leader" || task.createdById === user.id;
+    const canEdit = user.role === "team_leader" || user.role === "admin" || user.role === "Technical Director" || task.createdById === user.id;
 
     const canComplete = assignees.some((assignee) => assignee.id === user.id);
 

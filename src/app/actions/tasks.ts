@@ -292,7 +292,8 @@ export async function updateTask(input: {
 
     const canEdit =
         user.role === "team_leader" ||
-        task.createdById === user.id;
+        task.createdById === user.id ||
+        user.role === "admin";
 
     if (!canEdit) {
         return {
@@ -340,9 +341,19 @@ export async function updateTask(input: {
             })
             .where(eq(tasks.id, result.data.taskId));
 
-        return {
-            success: true as const,
-        };
+            let email = new Email();
+            email.sendTaskEmails(
+                result.data.assigneeIds.map((a) => a), 
+                    { 
+                    title: result.data.title, 
+                    description: result.data.description ?? undefined, 
+                    dueDate: result.data.description ?? undefined 
+                }
+            );
+
+            return {
+                success: true as const,
+            };
     } catch (error) {
         console.error("updateTask failed:", error);
 
@@ -366,10 +377,10 @@ export async function deleteTask(taskId: string) {
     }
 
     const [user] = await db
-        .select()
-        .from(users)
-        .where(eq(users.id, session.user.id))
-        .limit(1);
+    .select()
+    .from(users)
+    .where(eq(users.id, session.user.id))
+    .limit(1);
 
     if (!user) {
         return {
