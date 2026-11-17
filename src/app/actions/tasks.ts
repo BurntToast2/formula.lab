@@ -293,7 +293,13 @@ export async function updateTask(input: {
     const canEdit =
         user.role === "team_leader" ||
         task.createdById === user.id ||
-        user.role === "admin";
+        user.role === "admin" ||
+        user.role === "Technical Director" ||
+        user.role === "Head of Drivetrain" ||
+        user.role === "Head of Electronics" ||
+        user.role === "Head of Suspension" ||
+        user.role === "Head of Brakes" ||
+        user.role === "Head of Chassis" ;
 
     if (!canEdit) {
         return {
