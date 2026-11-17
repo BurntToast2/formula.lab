@@ -389,12 +389,15 @@ export async function deleteTask(taskId: string) {
         };
     }
 
-    if (user.role !== "team_leader") {
-        return {
-            success: false as const,
-            error: "Only team leaders can delete tasks.",
-        };
-    }
+    if (user.role !== "Technical Director" && 
+        user.role !== "admin" 
+       )
+   {
+       return {
+           success: false as const,
+           error: "Only team leaders can delete tasks.",
+       };
+   }
 
     const [task] = await db
         .select({ id: tasks.id })
